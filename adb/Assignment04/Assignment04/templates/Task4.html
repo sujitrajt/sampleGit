@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Rishindra</title>
+    {% include '/index.html' %}
+</head>
+
+ <style>
+
+</style>
+<div align=center>
+<h2>Graph of magnitude against depth for the 100 recent quakes<h2>
+{% if msg %}
+     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+	<script type="text/javascript">
+		google.charts.load('current', {'packages':['corechart']});
+		google.charts.setOnLoadCallback(drawChart);
+
+		function drawChart() {
+
+			var data = google.visualization.arrayToDataTable([
+				['Magnitude','Depth'],
+				{% for row in r %}
+				[ {{ row[0] }} , {{ row[1] }}],
+				{% endfor %}
+				]);
+
+			var options = {
+				title: 'Earthquakes chart',
+
+                is2D:true,
+				width: 1200,
+                height:800,
+				hAxis: {
+					title: 'Magnitude', minValue: -180, maxValue: 180,
+				},
+				vAxis: {
+					title: 'Depth', minValue: -90, maxValue: 90,
+				},
+				legend: 'none'
+			};
+
+			var chart = new google.visualization.ScatterChart(document.getElementById('ScatterChart'));
+			chart.draw(data, options);
+		}
+	</script>
+
+	<div id="ScatterChart" style="width: 900px; height: 500px;"></div>
+
+<br>
+{% endif %}
+</div>
+</html>

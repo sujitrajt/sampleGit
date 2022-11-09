@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<!-- Responsiveness is defined in the next line of code -->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css')}}" />
+	<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+</head>
+<body>
+	<div class="header">
+		<p>
+		<div class="column3"><h3><a href=" " class="title">WELCOME!</a></h3></div></p>
+		<div class="column4"><p class="nav-mar">
+			<a href="task1" class="nav-links"></a>
+			<a href="task2" class="nav-links"></a>				
+		</div>
+
+	</div>
+	<div class="details" align=center><h2><strong>Naga Sai Rishindra Popuri(1001866373)</strong></h2>
+	</div>
+
+	<div align=center>
+		{% block main%} {%endblock%}
+	</div>
+    </body>
+    </html>

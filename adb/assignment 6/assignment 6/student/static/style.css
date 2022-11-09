@@ -1,0 +1,45 @@
+body{
+    font-family: Montserrat,sans-serif;
+    margin: 0px;
+    margin-top: -1px;
+    text-decoration-color: #fdfdfd;
+}
+
+.header{
+    background-color: #4bb4b4;
+    margin-top: -18px;
+    color: #ffffff;
+    height: 70px;
+    padding-left: 10%;
+    text-decoration-color: white;
+}
+
+p.nav-mar{
+    margin-top: 35px;
+}
+a.title{
+    text-decoration: none;    
+}
+
+.column3{
+    float: left;
+    width: 30%;
+    padding-top: 1%;
+}
+.column4{
+    float: left;
+    width: 40%;
+}
+
+.nav-links{
+    text-decoration: none;
+    margin-left: 20px;
+    text-decoration-color: white;
+}
+
+#container{
+    width: 80%;
+    height: 400px;
+    display: inline-block;
+    margin: 0 auto;
+}

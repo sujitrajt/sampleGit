@@ -1,0 +1,8 @@
+{%extends "header.html"%}
+{%block main%}
+    <form method="post" action="/result1">
+        <p>Enter your search terms:  <input type="text" name="text" required>
+        <p><input type="submit" value="Search"></p>
+    </form>
+    {% block content %} {% endblock content %} 
+{% endblock main %} 

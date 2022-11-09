@@ -1,0 +1,10 @@
+{%extends "task1.html"%}
+{%block content%}
+{%if count!=0%}
+{%for d in data%}
+<p align=center style=color:blue> {{d}}</p>
+{%endfor%}
+{%else%}
+<p align=center style=color:red> NO DATA FOR GIVEN VALUES</p>
+{%endif%}
+{%endblock content%}

@@ -1,0 +1,333 @@
+
+Name:Naga Sai Rishindra Popuri
+Last 4 digits ID:1001866373
+
+CSE 6331, Cloud Computing					
+
+
+Quiz Q1, Summer 2022   (c) DL, UTA, 2022
+
+
+  C&P means cut and paste only those relevant lines from your program(s) into this quiz.
+
+
+ 1.  I understand that I am on my honor during this quiz, I will not collaborate, use 
+     non-allowed sources, and I will not discuss or share this quiz with anyone for the next 
+     12 hours.
+     You MAY: use Google to search, use previous source code, 
+     YOU MAY NOT use:
+     Email, Facebook, Hangouts, IM, chats, Skype or ANY other human connection.
+
+     This is a timed test. Late tests will have points deducted for being late.
+     Very late tests will not be graded.
+
+     When you are complete, with any part, please send the link, raise your hand, so we may visually inspect that part.
+
+     The second part of the test, you should electronically submit, you will need to copy and paste 
+     only those lines of code to implement that part of the test, usually a few (two to eight) lines of code. 
+     Place it immediately after the question.
+
+     Submit this Quiz (renamed) with code cut and pasted, ONLY text. DO NOT submit zips, binaries, libraries,
+     or anything other than text.
+
+     When any parts(questions) are complete complete, submit this test, you may make multiple submissions.
+
+     If you have computer, or other, problems, please raise your hand immediately.
+
+     If you understand and agree, please initial here:
+     _____Rishindra Popuri____________
+
+ 2. Get files from this same folder.
+   
+ 3. Name your program/submission with your name and last digits of your ID.
+
+ 4. Using the cloud services provider, all functionality possible should be implemented on that provider.
+    (Of course, displaying web pages through a browser and the user interface is "local")
+    The cloud provider is MS Azure.
+
+ 5. Upload all data files (*jpg and *csv, not this quiz) to the cloud service.
+  
+Show and submit code, when each part is complete, raise your hand and then show us:
+
+All of the following should have some type of web interface, the method, for this quiz, is not important.
+
+ 10. Show a web page and interface (which resides on the cloud provider) with your name as it appears on your ID card 
+     as well as your the last 4 digits of your student ID in large font at the top of every web page dispayed (for this quiz)
+     On the first page show a picture of YOU (if you don't have one, that is unusual, but use s.jpg) below your name and ID number.
+
+<!DOCTYPE html>
+<html>
+<head>
+	<!-- Responsiveness is defined in the next line of code -->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css')}}" />
+	
+</head>
+<body>
+	<div class="header">
+		<p>
+		<div class="column3"><h3><a href=" " class="title">WELCOME MAVRICKS!</a></h3></div></p>
+		<div class="column4"><p class="nav-mar">
+			<a href="/" class="nav-links">Search_picture</a>
+			<a href="selectsal" class="nav-links">Query</a>
+			<a href="uploadpic" class="nav-links">Upload a picture</a>
+			<a href="deleterec" class="nav-links">Delete a entry</a>
+			<a href="editrec" class="nav-links">Edit</a>						
+		</div>
+
+	</div>
+	<div align=center><h2><strong>Naga Sai Rishindra Popuri (1001866373)</strong></h2>
+		<img src="https://samplerishi.blob.core.windows.net/rishisample/s.jpg" alt="Image Not found!"> 
+	</div>
+
+	<div align=center>
+		{% block main%} {%endblock%}
+	</div>
+    </body>
+    </html>
+
+
+
+
+
+ 11. (a) We will give you a word in keywords, please show the corresponding pictures.
+
+app.route("/submit", methods=["GET", "POST"])
+def submit():
+    formdata = dict(request.form)
+    name = formdata['name']
+    for d in data:
+        if(name.lower() in d['keywords'].lower() and not len(d['pic'])<3): 
+            pic = d['pic']
+            break
+        else:
+            pic="PICTURE NOT FOUND"   
+    print(pic)
+    if(pic!="PICTURE NOT FOUND"):
+        picture = os.path.join(app.config['UPLOAD_FOLDER'], pic)
+        flag=0
+    else:
+        picture="PICTURE NOT FOUND"  
+        flag=1  
+    print("picture final: "+picture)
+    return render_template("displaypic.html", user_image = picture, flag=flag ) 
+
+{% extends "header.html"%}
+{%block main%}
+    <form method="post" action="/submit">
+        <p>Select a Keyword to see the picture:  <input type="text" name="name" required></p>
+        <p><input type="submit"></p>
+    </form>
+    </div>
+    {% block content %} {% endblock content %} 
+    <div align=center>
+        {%block table%}
+        <table border=1px solid #FF0000;>
+          <tr>
+            <th>Name</th>
+            <th>Picture</th>
+            <th>Number</th>
+            <th>Keywords</th>
+          </tr>
+          {%for r in data%}
+          <tr>
+            <td border=1px solid #FF0000>{{r['name']}}</td>
+            <td>{{r['pic']}}</td>
+            <td>{{r['num']}}</td>
+            <td>{{r['keywords']}}</td>
+          </tr>
+          {%endfor%}
+        </table>    
+        {%endblock table%}  
+{%endblock main%}
+     (b) we will give you a numeric range (Num) low to high, for all data within that range please show the name, number, 
+         picture and keywords.
+
+{% extends "header.html"%}
+{%block main%}
+    <form method="post" action="/displaysal">
+        <p>Select range:  from <input type="text" name="from" required> to <input type="text" name="to" required></p>
+        <p><input type="submit" ></p>
+    </form>
+    </div>
+    {% block content %} {% endblock content %}  
+{%endblock%}
+
+@app.route("/selectsal")
+def selectsal():
+    return render_template("selectsal.html")  
+
+@app.route("/displaysal", methods=["GET", "POST"])
+def displaysal():
+    formdata = dict(request.form)
+    print(formdata)
+    fromsal = formdata['from'] 
+    tosal = formdata['to'] 
+
+    img_list = list()
+    for r in data:
+        if (r['num']!=' ' and r['num']!='' and len(r['num'])!=0 and r['num']!=None):
+            sal = r['num']
+        else:
+            sal = int(0)  
+        if(int(sal)>=int(fromsal) and int(sal)<=int(tosal)):
+            img= dict()
+            img['name']=r['name']
+            img['num']=sal
+            if not len(r['pic'])<2 :
+                img['pic']=os.path.join(app.config['UPLOAD_FOLDER'], r['pic'])
+            else:
+                img['pic'] = 'Image not available'
+            img_list.append(img)   
+    print(img_list)     
+    return render_template("displaysal.html", image_list=img_list)
+
+{% extends "selectsal.html" %}
+    {% block content %}
+    <div>
+    <table>
+        {% for img in image_list %}
+        <tr>
+        <td><strong>Name: </strong>{{img['name']}}</td>
+        <td><strong>Number: </strong>{{img['num']}}</td>
+        <td><img src={{img['pic']}}/></td>   
+        <td><strong>Keyword: </strong>{{img['keywords']}}</td>
+        </tr>             x
+        {% endfor %}
+    </table>
+    </div>
+    {% endblock content %}
+ 12. We will give you a number, we would like to modify (change) the picture or the name.
+{% extends "header.html"%}
+{%block main%}
+  <form method="post" action="/edit">
+      <p>Select a name to edit the record:  <input type="text" name="name" required></p>
+      <p>Select attribute to edit:  <input type="text" name="att" required></p>
+      <p>Enter value of the attribute selected:  <input type="text" name="value" required></p>
+      <p><input type="submit"></p>
+  </form>
+  </div>
+  <div>{% block content %} {% endblock content %}  </div>
+  <div align=center>
+    {%block table%}
+    <table border=1px solid #FF0000;>
+      <tr>
+        <th>Name</th>
+        <th>Picture</th>
+        <th>Number</th>
+        <th>Keywords</th>
+      </tr>
+      {%for r in data%}
+      <tr>
+        <td border=1px solid #FF0000>{{r['name']}}</td>
+        <td>{{r['pic']}}</td>
+        <td>{{r['num']}}</td>
+        <td>{{r['keywords']}}</td>
+      </tr>ds']}}</td>
+      </tr>
+      {%endfor%}
+    </table>    
+    {%endblock table%}
+  </div>
+  
+{%endblock main%}
+
+{% extends "editrec.html" %}
+{% block content%}
+{%if flag==0%}
+<div>
+    <p style="color:blue;">RECORD EDITED SUCCESSFULLY!!</p>
+</div>
+{%else%}
+<div><p style="color:red;">NAME OR ATTRIBUTE NOT FOUND</p></div>
+{%endif%}
+{%endblock%}
+
+@app.route("/edit", methods=["GET", "POST"])
+def edit():
+    formdata = dict(request.form)
+    print(formdata)
+    name = formdata['name'].lower() 
+    att = formdata['att'].lower()
+    val = formdata['value'].lower()
+    for d in data:
+        if(d['name']==name):
+            if(att in list(d.keys())):
+                d[att]=val
+                flag=0
+                break
+            else:
+                flag=1
+        else:
+            flag=1
+    return render_template("edit.html",data=data)
+ 13. (a) We want to add an additional entry, for that we will give you a name, a number and keywords (bonus: and a picture).
+     (b) We also want to be able to remove entries.
+{% extends "deleterec.html" %}
+{% block content%}
+{%if flag==0%}
+<div>
+    <p style="color:blue;">RECORD DELETED SUCCESSFULLY!!</p>
+</div>
+{%else%}
+<div><p style="color:red;">NAME NOT FOUND</p></div>
+{%endif%}
+{%endblock%}
+
+@app.route("/deleterec")
+def deleterec():
+    return render_template("deleterec.html", data=data)
+
+@app.route("/delete", methods=["GET", "POST"])
+def delete():
+    formdata = dict(request.form)
+    print(formdata)
+    name = formdata['name'].lower() 
+    for d in data:
+        if(d['name']==name):
+            data.remove(d)
+            break
+            flag=0
+        else:
+            flag=1
+    return render_template("delete.html",data=data)
+
+{% extends "header.html"%}
+{%block main%}
+  <form method="post" action="/delete">
+      <p>Select a name to delete the record:  <input type="text" name="name" required></p>
+      <p><input type="submit"></p>
+  </form>
+  </div>
+  <div>{% block content %} {% endblock content %}  </div>
+  <div align=center>
+    {%block table%}
+    <table border=1px solid #FF0000;>
+      <tr>
+        <th>Name</th>
+        <th>Picture</th>
+        <th>Number</th>
+        <th>Keywords</th>
+      </tr>
+      {%for r in data%}
+      <tr>
+        <td border=1px solid #FF0000>{{r['name']}}</td>
+        <td>{{r['pic']}}</td>
+        <td>{{r['num']}}</td>
+        <td>{{r['keywords']}}</td>
+      </tr>
+      {%endfor%}
+    </table>
+    
+    {%endblock table%}
+  </div>
+  {%endblock%}
+
+ 14. In class, on your computer, please show us the application running and we will try it out. Only for parts 10, 11, 12, 13.
+
+ 15. When complete, return (send) this quiz
+     If you finish early, send this immediately, otherwise send between
+     the end of class and no more than 1 minute after that.
+

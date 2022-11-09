@@ -1,0 +1,49 @@
+body{
+
+    font-family: Montserrat,sans-serif;
+    margin: 0px;
+    margin-top: -1px;
+    text-decoration-color: #fdfdfd;
+    background-image: url("backgn.jpg");
+    background-color: #cccccc; /* Used if the image is unavailable */
+    height: 900px; /* You must set a specified height */
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: cover;
+}
+.main{
+    margin-right: 10%;
+}
+
+.header{
+    background-color: #76af93;
+    margin-top: -18px;
+    color: #ffffff;
+    height: 110px;
+    padding-left: 10%;
+    text-decoration-color: white;
+
+}
+p.nav-mar{
+    margin-top: 35px;
+}
+a.title{
+    text-decoration: none;
+    
+}
+
+.column3{
+    float: left;
+    width: 30%;
+    padding-top: 1%;
+}
+.column4{
+    float: left;
+    width: 40%;
+}
+
+.nav-links{
+    text-decoration: none;
+    margin-left: 20px;
+    text-decoration-color: white;
+}

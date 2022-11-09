@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Rishindra</title>
+    {% include '/index.html' %}
+</head>
+
+ 
+  </head>
+  <div align=center>
+<form action="/Task3" method="POST">
+   Magnitude: <input type="text" placeholder="Enter First value of range Magnitude" name="mag1" value="{{ mag1 }}"> <br/><br/>
+   Magnitude: <input type="text" placeholder="Enter Second value of range Magnitude" name="mag2" value="{{ mag2 }}"> <br/><br/>
+    <input type="submit" value="Submit">
+</form>
+</div>
+{% if msg %}
+<div align=center>
+     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load("current", {packages: ['corechart', 'bar']});
+      google.charts.setOnLoadCallback(drawBar);
+
+      function drawBar() {
+        var data = google.visualization.arrayToDataTable([
+           ['Magnitude', 'Occurences'],
+          ['Mag between Intervals entered', {{f1}}],
+          ['Mag Less than or equal 1',{{f2}}],
+          ['Mag between 0 AND 1',{{f3}}],
+          ['Mag between 1 AND 2', {{f4}}],
+          ['Mag between 2 AND 3',  {{f5}}],
+          ['Mag between 3 AND 4', {{f6}}],
+         ['Mag between 4 AND 5', {{f7}}],
+
+        ]);
+
+        var options = {
+        title: 'Magnitude',
+        chartArea: {width: '40%'},
+
+        hAxis: {
+          title: 'TOTAL',
+          minValue: 0,
+          textStyle: {
+            bold: true,
+            fontSize: 13,
+            color: '#DC7633'
+          },
+          titleTextStyle: {
+            bold: true,
+            fontSize: 27,
+            color: '#B03A2E'
+          }
+        }
+        ,
+        vAxis: {
+          title: 'Magnitudes Intervals',
+          textStyle: {
+            fontSize: 15,
+            bold: true,
+            color: '#DC7633'
+          },
+          titleTextStyle: {
+            fontSize: 21,
+            bold: true,
+            color: '#B03A2E'
+          }
+        }
+      };
+      var chart = new google.visualization.BarChart(document.getElementById('Barchart'));
+      chart.draw(data, options);
+    }
+ </script>
+
+<div class="container-fluid" id="Barchart" style="width: 100%; height: 700px; margin-top:10px">
+
+</div>
+<br>
+{% endif %}
+  </body>
+</div>
+</html>

@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/f55ca1fa-09af-49db-9aa5-714ba27fad85/resourceGroups/appsvc_linux_centralus/providers/Microsoft.Web/sites/suzyapp1",
+    "appService.deploySubpath": "assignment 5"
+}

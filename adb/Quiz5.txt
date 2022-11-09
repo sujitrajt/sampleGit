@@ -1,0 +1,370 @@
+
+Name: Naga Sai Rishindra Popuri
+Last 4 digits ID:1001866373
+
+CSE 6331, Cloud Computing					
+
+
+Quiz Q5, Summer 2022   (c) DL, UTA, 2022
+
+
+  C&P means cut and paste only those relevant lines from your program(s) into this quiz.
+
+
+ 1.  I understand that I am on my honor during this quiz, I will not collaborate, use 
+     non-allowed sources, and I will not discuss or share this quiz with anyone for the next 
+     12 hours.
+     You MAY: use Google to search, use previous source code, 
+     YOU MAY NOT use:
+     Email, Facebook, Hangouts, IM, chats, Skype or ANY other human connection.
+
+     This is a timed test. Late tests will have points deducted for being late.
+     Very late tests will not be graded.
+
+     When you are complete, with any part, raise your hand, so we may visually inspect that part.
+
+     The second part of the test, you should electronically submit, you will need to copy and paste 
+     only those lines of code to implement that part of the test, usually a few (two to eight) lines of code. 
+     Place it immediately after the question.
+
+     Submit this Quiz (renamed) with code cut and pasted, ONLY text. DO NOT submit zips, binaries, libraries,
+     or anything other than text.
+
+     When any parts(questions) are complete complete, submit this test, you may make multiple submissions.
+
+     If you have computer, or other, problems, please raise your hand immediately.
+
+     If you understand and agree, please initial here:
+     ______NP___________
+
+ 2. Get files from this same folder.
+   
+ 3. Name your program/submission with your name and last digits of your ID.
+
+ 4a. Using the cloud services provider, all functionality possible should be implemented on that provider.
+     (Of course, displaying web pages through a browser and the user interface is "local")
+
+ 4b. Upload all data files (*csv, not this quiz) to cloud service. 
+  
+Show and submit code, when each part is complete, raise your hand and then show us:
+
+ To recieve credit you MUST show (demo) AND submit the code (text only) on Canvas.
+
+ 10. Show a web page and interface (which resides on the cloud provider) with your 
+     Student ID at the top and below that, your name, at the top of every web page dispayed 
+     (for this quiz). Please use a large font.
+
+     The text document is a famous story about the Alamo (now in Texas, earlier in Mexico).
+
+     One method to determine language and content is to count the most common (most frequent) words,       
+     (of course, numbers are not words, punctuation is not a word or part of a word).
+     We will give you a value N, please show the N most frequently occuring words in the story, ordered by the percent (or fraction)
+     of total words of each of those words.
+     For example if the text was "Burro hablando de orejas, que burro.", there are 6 words, burro is the most frequent at 2/6 of the
+     total. For N = 2, burro appears 2 out of 6, hablando 1 out of 6. (if there are others, take the first.)
+
+{%extends "header.html"%}
+{%block main%}
+    <form method="post" action="/result5">
+        
+        
+        <p>Enter N:  <input type="number" name="num" required>
+        <p><input type="submit" value=Submit"></p>
+    </form>
+    {% block content %} {% endblock content %} 
+{% endblock main %} 
+
+
+@app.route("/task5")
+def task5():
+    return render_template("task5.html") 
+
+@app.route('/result5', methods=['GET', 'POST'])
+def result5():
+    #Set the stopwords
+    formdata = dict(request.form)
+    n = int(formdata['num'])
+    #stopwords = set_stopwords()
+    print(stopwords)
+    
+    word = []
+    with open('Alamo.txt', 'r', encoding="utf-8") as input:
+        print(input)
+        for each_line in input:
+            print(each_line)
+            for words in each_line.split():
+                word.append(words.lower())
+
+    #Remove punctuation from the file data
+    exclude = set(string.punctuation)
+    finaldata = [''.join(char for char in str if char not in exclude) for str in word]
+    finaldata = list(filter(None, finaldata))
+    ls1=[]
+    ls2=[]
+    for i in finaldata:
+        if i.isnumeric():
+            ls1.append(i)
+        else:
+            ls2.append(i)
+    str1=''.join(ls2)
+    count=len(ls2)
+    
+    final1=' '.join(ls2)
+    lst1=list(final1)
+    lst2=[]
+    for i in range(len(lst1)):
+        s=lst1[i:i+2]
+        s=''.join(s)
+        s=s.strip()
+        if len(s)==2:
+            lst2.append(s)
+    
+
+       
+    freq = frequency(lst2)
+    for i in freq:
+        freq[i]=freq[i]/count
+    fnv =  dict(sorted(freq.items(), key=lambda item: item[1]))
+    kys = list(fnv.keys())
+    f = dict()
+    for k in kys[-n:]:
+        f[k] = fnv[k]
+    print(f)
+    '''lst=[]
+    lst.append(' '.join(finaldata))
+    final1 = ''.join(finaldata)
+    print(final1)
+    final2 = final1[ :n]
+    print(final2)
+    #freq1 = frequency(final2)
+    print(freq1)
+    leng=len(finaldata)'''
+        
+    return render_template("result5.html",fnv=f)
+
+{%extends "task5.html"%}
+{%block content%}
+<div style="text-align: center">
+    
+    <p align=center style=color:blue> Frequently occuring n words : </p>
+{%for d in fnv%}
+<p align=center style=color:blue>{{d}} : {{fnv[d]}}</p>
+{%endfor%}
+</div>
+{%endblock content%}
+
+ 11. For a given N (from the user) show the N most occuring two letter combinations (bigrams), but don't combine words. 
+     For example:
+     "Tener netern" for N = 2, the 2 most common are "te" and "ne" (or "er") but not "rn", since the first occurance 
+     is split between words.
+
+{%extends "header.html"%}
+{%block main%}
+    <form method="post" action="/result11">
+        
+        
+        <p>Enter N:  <input type="number" name="num" required>
+        <p><input type="submit" value=Submit"></p>
+    </form>
+    {% block content %} {% endblock content %} 
+{% endblock main %} 
+
+@app.route("/task11")
+def task11():
+    return render_template("task11.html") 
+
+@app.route('/result11', methods=['GET', 'POST'])
+def result11():
+    #Set the stopwords
+    formdata = dict(request.form)
+    n = int(formdata['num'])
+    #stopwords = set_stopwords()
+    print(stopwords)
+    
+    word = []
+    with open('Alamo.txt', 'r', encoding="utf-8") as input:
+        print(input)
+        for each_line in input:
+            print(each_line)
+            for words in each_line.split():
+                word.append(words.lower())
+
+    #Remove punctuation from the file data
+    exclude = set(string.punctuation)
+    finaldata = [''.join(char for char in str if char not in exclude) for str in word]
+    finaldata = list(filter(None, finaldata))
+    final1=' '.join(finaldata)
+    lst1=list(final1)
+    lst2=[]
+    for i in range(len(lst1)):
+        s=lst1[i:i+2]
+        s=''.join(s)
+        s=s.strip()
+        if len(s)==2:
+            lst2.append(s)
+    
+
+       
+    freq = frequency(lst2)
+    fnv =  dict(sorted(freq.items(), key=lambda item: item[1]))
+    kys = list(fnv.keys())
+    f = dict()
+    for k in kys[-n:]:
+        f[k] = fnv[k]
+    print(f)
+    '''lst=[]
+    lst.append(' '.join(finaldata))
+    final1 = ''.join(finaldata)
+    print(final1)
+    final2 = final1[ :n]
+    print(final2)
+    #freq1 = frequency(final2)
+    print(freq1)
+    leng=len(finaldata)'''
+        
+    return render_template("result11.html",fnv=f)
+
+{%extends "task11.html"%}
+{%block content%}
+<div style="text-align: center">
+    
+    <p align=center style=color:blue> Frequently occuring n words : </p>
+{%for d in fnv%}
+<p align=center style=color:blue>{{d}} : {{fnv[d]}}</p>
+{%endfor%}
+</div>
+{%endblock content%}
+
+ 12. We will give you a two character sequence and ask you to replace it in the text with two other characters.
+     For example replace "ne" with "en".
+     After that replacement show us the first 5 lines (or sentences) of the document on a web page.
+
+{%extends "header.html"%}
+{%block main%}
+    <form method="post" action="/result12">
+        <p>Enter string:  <input type="text" name="n1" required>
+        <p>Enter string to be replaced:  <input type="text" name="n2" required>
+        <p><input type="submit" value="Search"></p>
+    </form>
+    {% block content %} {% endblock content %} 
+{% endblock main %} 
+
+@app.route("/task12")
+def task12():
+    return render_template("task12.html") 
+
+@app.route('/result12', methods=['GET', 'POST'])
+def result12():
+    formdata = dict(request.form)
+    n1 = formdata['n1']
+    n2 = formdata['n2']
+    #Set the stopwords
+    
+    #stopwords = set_stopwords()
+    print(stopwords)
+    
+    word = []
+    eachlines=[]
+    with open('Alamo.txt', 'r', encoding="utf-8") as input:
+        print(input)
+        for each_line in input:
+            eachlines.append(each_line)
+            for words in each_line.split():
+                word.append(words.lower())
+    l1=[]
+    for i in eachlines:
+        s=i.replace(n1,n2)
+        l1.append(s)
+    l2=l1[ :5]
+
+    
+        
+    return render_template("result12.html",fnv=l2)  
+
+{%extends "task12.html"%}
+{%block content%}
+<div style="text-align: center">
+    
+    <p align=center style=color:blue> First five lines : </p>
+{%for d in fnv%}
+<p align=center style=color:blue>{{d}}</p>
+{%endfor%}
+</div>
+{%endblock content%}
+
+ 13. There is a list of stop words. Please count how many times each of those stop words appears in the text.
+     For each that has a count greater than zero, show that word and the number of times it occurs.
+
+@app.route("/task11")
+def task11():
+    return render_template("task11.html") 
+
+@app.route('/result11', methods=['GET', 'POST'])
+def result11():
+    #Set the stopwords
+    formdata = dict(request.form)
+    n = int(formdata['num'])
+    #stopwords = set_stopwords()
+    print(stopwords)
+    
+    word = []
+    with open('Alamo.txt', 'r', encoding="utf-8") as input:
+        print(input)
+        for each_line in input:
+            print(each_line)
+            for words in each_line.split():
+                word.append(words.lower())
+
+    #Remove punctuation from the file data
+    exclude = set(string.punctuation)
+    finaldata = [''.join(char for char in str if char not in exclude) for str in word]
+    finaldata = list(filter(None, finaldata))
+    final1=' '.join(finaldata)
+    lst1=list(final1)
+    lst2=[]
+    for i in range(len(lst1)):
+        s=lst1[i:i+2]
+        s=''.join(s)
+        s=s.strip()
+        if len(s)==2:
+            lst2.append(s)
+    
+
+       
+    freq = frequency(lst2)
+    fnv =  dict(sorted(freq.items(), key=lambda item: item[1]))
+    kys = list(fnv.keys())
+    f = dict()
+    for k in kys[-n:]:
+        f[k] = fnv[k]
+    print(f)
+    '''lst=[]
+    lst.append(' '.join(finaldata))
+    final1 = ''.join(finaldata)
+    print(final1)
+    final2 = final1[ :n]
+    print(final2)
+    #freq1 = frequency(final2)
+    print(freq1)
+    leng=len(finaldata)'''
+        
+    return render_template("result11.html",fnv=f)
+
+
+{%extends "header.html"%}
+{%block content%}
+<div style="text-align: center">
+    
+    <p align=center style=color:blue> Frequently occuring stopwords : </p>
+{%for d in fnv%}
+<p align=center style=color:blue>{{d}} : {{fnv[d]}}</p>
+{%endfor%}
+</div>
+{%endblock content%}
+
+ 14. Show us, in a link, the application running and we will try it out. Only for parts 10, 11, 12, 13
+
+ 15. When complete, return (send) this quiz
+     If you finish early, send this immediately, otherwise send between
+     the end of class and no more than 1 minute after that.
+

@@ -1,0 +1,31 @@
+{%extends "header.html"%}
+{%block main%}
+{% block content %} {% endblock content %} 
+    <form method="post" action="/result1">
+        <p align=center>Question to be Answered</p>
+            <div align=center>
+                {%block table%}
+                <table border=1px solid #FF0000; id='qtable'>
+                    <thead>
+                        <tr>
+                            <th scope="col">question</th>
+                            <th scope="col">answer</th>
+                            <th scope="col">hint</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in data %}
+                            <tr>
+                                <td>{{ row[0] }}</td>
+                                <input type="hidden" name="ques" value="{{ row[0] }}" />
+                                <td><input type="text" name="ans" required></td>
+                                <td>{{ row[1] }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {%endblock table%}         
+        <p><input type="submit"></p>
+    </form>
+{% endblock main %} 

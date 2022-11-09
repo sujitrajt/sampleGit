@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Rishindra</title>
+</head>
+{% include "index.html" %}
+<body>
+
+<div align=center>
+<form action="/Task5" method="POST">
+   Magnitude: <input type="text" placeholder="Enter First value of range Magnitude" name="magWeek1" value="{{ magWeek1 }}"> <br/><br/>
+   Magnitude: <input type="text" placeholder="Enter Second value of range Magnitude" name="magWeek2" value="{{ magWeek2 }}"> <br/><br/>
+    Day1: <input type="text" placeholder="Enter day1" name="d1" value="{{ d1 }}"> <br/><br/>
+    Day2: <input type="text" placeholder="Enter day2" name="d2" value="{{ d2 }}"> <br/><br/>
+    <input type="submit" value="Submit">
+</form>
+<div align=center></div>
+{% if msg %}
+<div align=center></div>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+	<script type="text/javascript">
+		google.charts.load('current', {'packages':['corechart']});
+		google.charts.setOnLoadCallback(drawLineChart);
+
+		function drawLineChart() {
+			var data = google.visualization.arrayToDataTable([
+				['MAGNITUDE', 'Time'],
+				{% for item in r %}
+				['{{ item[1] }}' , {{ item[0] }} ],
+				{% endfor %}
+				]);
+
+			var options = {
+				title: 'Earthquakes by Date',
+				width: 1250,
+				legend: { position: 'bottom' },
+                font: '15px'
+
+
+			};
+
+			var chart = new google.visualization.LineChart(document.getElementById('linechart'));
+
+			chart.draw(data, options);
+		}
+	</script>
+
+	<div id="linechart" style="width: 1250px; height: 750px"></div>
+
+{% endif %}
+</body>
+</div>
+</html>

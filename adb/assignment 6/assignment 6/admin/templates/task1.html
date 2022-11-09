@@ -1,0 +1,46 @@
+{%extends "header.html"%}
+{%block main%}
+
+    <form method="post" action="/result1">
+        <p>Enter question:  <select name="ques" required> 
+            {%for d in data1 %}           
+            <option value="{{ d[2] }}" maxlength=50 >{{d[2]}}</option>
+            
+            {%endfor%}
+            </select>          
+        <p>give a hint:  <input type="text" name="hint" required>
+        <p><input type="submit"></p>
+    </form>
+{% block content %} {% endblock content %} 
+        <p align=center>Data</p>
+            <div align=center>
+                {%block table%}
+                <table border=1px solid #FF0000; id='qtable'>
+                    <thead>
+                        <tr>
+                            <th scope="col">TNAME</th>
+                            <th scope="col">SNAME</th>
+                            <th scope="col">QUESTION</th>
+                            <th scope="col">ANSWER</th>
+                            <th scope="col">SCORE</th>
+                            <th scope="col">HINT</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in data %}
+                            <tr>
+                                <td>{{ row[0] }}</td>
+                                <td>{{ row[1] }}</td>
+                                <td>{{ row[2] }}</td>
+                                <td>{{ row[3] }}</td>
+                                <td>{{ row[4] }}</td>
+                                <td>{{ row[5] }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {%endblock table%}       
+ 
+
+{% endblock main %} 
